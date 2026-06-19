@@ -1,0 +1,7 @@
+{
+  "C_Cpp.default.includePath": [
+    "${workspaceFolder}/includes",
+    "${workspaceFolder}/**"
+  ],
+  "C_Cpp.intelliSenseEngine": "Default"
+}

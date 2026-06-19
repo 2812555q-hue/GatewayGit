@@ -1,0 +1,37 @@
+项目：UART-TCP通信网关
+
+项目描述：
+基于Linux(LubanCatA1)平台使用C语言开发串口UART-TCP通信网关，实现UART与TCP服务器之间的双向数据转发，并设计心跳检测、异常恢复与自动重连机制，提升设备长连接通信稳定性。
+
+技术栈：
+C / Linux/Socket/UART/pthread/semaphore/mutex
+
+项目内容：
+-基于LinuxSocket API实现 TCPClient，与服务器建立长连接通信
+-实现UART ↔ TCP双向数据转发，支持串口设备数据上传与服务器指令下发
+-设计自定义协议解析状态机，完成AA-LEN-PAYLOAD-EE格式数据帧解析
+-构建多线程通信架构，包含UART接收线程、TCP接收线程、心跳线程与重连线程
+-实现心跳检测与自动重连机制，在发送/接收异常或心跳连续超时后自动恢复连接
+-使用pthread mutex保护共享变量（如 sock_fd、连接状态、心跳状态），解决多线程竞态问题
+-通过conf配置文件实现服务器IP、端口等运行参数配置，提高程序可维护性与可部署性
+
+线程架构：
+UART Thread
+TCP Thread
+Heartbeat Thread
+Reconnect Thread
+Stats Thread
+
+新增特性：
+- 支持更完整的配置项（UART参数、心跳参数、重连退避、日志、统计）
+- 增加日志系统（分级、可写文件）
+- 支持可选CRC8校验，增强协议健壮性
+- 统计线程定期输出吞吐/错误/重连信息
+- TCP Keepalive 保活配置
+
+运行方式：
+./build_x86/main
+./build_x86/main -c gateway.conf -v INFO
+
+运行环境：
+Linux
